@@ -1,0 +1,903 @@
+{
+  "properties": {
+    "workflow_details": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Workflow Name",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Workflow Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "description": "Add information that will help to differentiate this workflow from another.",
+      "title": "Set Workflow Details"
+    },
+    "er_client": {
+      "additionalProperties": false,
+      "properties": {
+        "data_source": {
+          "$ref": "#/$defs/EarthRangerConnection",
+          "description": "Select one of your configured data sources.",
+          "title": ""
+        }
+      },
+      "required": [
+        "data_source"
+      ],
+      "type": "object",
+      "title": "Data Source"
+    },
+    "base_maps": {
+      "additionalProperties": false,
+      "properties": {
+        "base_maps": {
+          "default": [
+            {
+              "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+              "opacity": 1,
+              "max_zoom": 20,
+              "min_zoom": 0
+            },
+            {
+              "url": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+              "opacity": 0.5,
+              "max_zoom": 20,
+              "min_zoom": 0
+            }
+          ],
+          "description": "Select tile layers to use as base layers in map outputs. The first layer in the list will be the bottommost layer displayed.",
+          "ecoscope:advanced": true,
+          "items": {
+            "anyOf": [
+              {
+                "description": "A tiled raster layer loaded on-demand from a URL template (e.g., base maps).",
+                "properties": {
+                  "url": {
+                    "default": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    "title": "Preset Layer URL",
+                    "type": "string",
+                    "const": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    "enum": [
+                      "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    ]
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "Set layer transparency from 1 (fully visible) to 0 (hidden).",
+                    "ecoscope:advanced": true,
+                    "maximum": 1,
+                    "minimum": 0,
+                    "title": "Layer Opacity",
+                    "type": "number"
+                  }
+                },
+                "title": "Open Street Map",
+                "type": "object"
+              },
+              {
+                "description": "A tiled raster layer loaded on-demand from a URL template (e.g., base maps).",
+                "properties": {
+                  "url": {
+                    "default": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+                    "title": "Preset Layer URL",
+                    "type": "string",
+                    "const": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+                    "enum": [
+                      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+                    ]
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "Set layer transparency from 1 (fully visible) to 0 (hidden).",
+                    "ecoscope:advanced": true,
+                    "maximum": 1,
+                    "minimum": 0,
+                    "title": "Layer Opacity",
+                    "type": "number"
+                  }
+                },
+                "title": "Roadmap",
+                "type": "object"
+              },
+              {
+                "description": "A tiled raster layer loaded on-demand from a URL template (e.g., base maps).",
+                "properties": {
+                  "url": {
+                    "default": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                    "title": "Preset Layer URL",
+                    "type": "string",
+                    "const": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                    "enum": [
+                      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                    ]
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "Set layer transparency from 1 (fully visible) to 0 (hidden).",
+                    "ecoscope:advanced": true,
+                    "maximum": 1,
+                    "minimum": 0,
+                    "title": "Layer Opacity",
+                    "type": "number"
+                  }
+                },
+                "title": "Satellite",
+                "type": "object"
+              },
+              {
+                "description": "A tiled raster layer loaded on-demand from a URL template (e.g., base maps).",
+                "properties": {
+                  "url": {
+                    "default": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+                    "title": "Preset Layer URL",
+                    "type": "string",
+                    "const": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+                    "enum": [
+                      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+                    ]
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "Set layer transparency from 1 (fully visible) to 0 (hidden).",
+                    "ecoscope:advanced": true,
+                    "maximum": 1,
+                    "minimum": 0,
+                    "title": "Layer Opacity",
+                    "type": "number"
+                  }
+                },
+                "title": "Terrain",
+                "type": "object"
+              },
+              {
+                "description": "A tiled raster layer loaded on-demand from a URL template (e.g., base maps).",
+                "properties": {
+                  "url": {
+                    "default": "https://server.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}",
+                    "title": "Preset Layer URL",
+                    "type": "string",
+                    "const": "https://server.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}",
+                    "enum": [
+                      "https://server.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}"
+                    ]
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "Set layer transparency from 1 (fully visible) to 0 (hidden).",
+                    "ecoscope:advanced": true,
+                    "maximum": 1,
+                    "minimum": 0,
+                    "title": "Layer Opacity",
+                    "type": "number"
+                  }
+                },
+                "title": "USGS Hillshade",
+                "type": "object"
+              },
+              {
+                "description": "A tiled raster layer loaded on-demand from a URL template (e.g., base maps).",
+                "properties": {
+                  "url": {
+                    "default": "https://example.tiles.com/{z}/{x}/{y}.png",
+                    "description": "The URL of a publicly accessible tiled raster service.",
+                    "pattern": "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}([-a-zA-Z0-9()@:%_\\+.~#?&//=\\{\\}]*)",
+                    "title": "Custom Layer URL",
+                    "type": "string"
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "Set layer transparency from 1 (fully visible) to 0 (hidden).",
+                    "ecoscope:advanced": true,
+                    "maximum": 1,
+                    "minimum": 0,
+                    "title": "Custom Layer Opacity",
+                    "type": "number"
+                  },
+                  "max_zoom": {
+                    "default": 20,
+                    "description": "Set the maximum zoom level to fetch tiles for.",
+                    "title": "Custom Layer Max Zoom",
+                    "type": "integer"
+                  },
+                  "min_zoom": {
+                    "default": 0,
+                    "description": "Set the minimum zoom level to fetch tiles for.",
+                    "title": "Custom Layer Min Zoom",
+                    "type": "integer"
+                  }
+                },
+                "title": "Custom Layer (Advanced)",
+                "type": "object"
+              }
+            ],
+            "title": "Base Layer"
+          },
+          "title": " ",
+          "type": "array"
+        }
+      },
+      "type": "object",
+      "required": [],
+      "title": "Define Base Maps"
+    },
+    "time_range": {
+      "additionalProperties": false,
+      "properties": {
+        "since": {
+          "description": "The start time",
+          "format": "date-time",
+          "title": "Since",
+          "type": "string"
+        },
+        "until": {
+          "description": "The end time",
+          "format": "date-time",
+          "title": "Until",
+          "type": "string"
+        },
+        "timezone": {
+          "$ref": "#/$defs/TimezoneInfo",
+          "default": null,
+          "title": "Timezone"
+        }
+      },
+      "required": [
+        "since",
+        "until"
+      ],
+      "type": "object",
+      "description": "Choose the period of time to analyze.",
+      "title": "Time Range"
+    },
+    "groupers": {
+      "additionalProperties": false,
+      "properties": {
+        "groupers": {
+          "default": [
+            {
+              "temporal_index": "__quarter__"
+            }
+          ],
+          "description": "            Specify how the data should be grouped to create the views for your dashboard.\n            This field is optional; if left blank, all the data will appear in a single view.\n            ",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TemporalGrouper"
+              },
+              {
+                "$ref": "#/$defs/ValueGrouper"
+              }
+            ],
+            "title": "Group by"
+          },
+          "title": " ",
+          "type": "array"
+        }
+      },
+      "type": "object",
+      "required": [],
+      "title": "Set Groupers"
+    },
+    "events": {
+      "additionalProperties": false,
+      "properties": {
+        "event_types": {
+          "description": "",
+          "items": {
+            "type": "string"
+          },
+          "title": "Event Types",
+          "type": "array",
+          "ecoscope:transform": [
+            {
+              "transformer": "EarthRangerEnumResolver",
+              "transformer_kws": {
+                "type": "event_type",
+                "depends_on": "properties.er_client.properties.data_source.properties.name"
+              }
+            }
+          ],
+          "default": [
+            "community_meeting"
+          ]
+        },
+        "event_states": {
+          "default": [
+            "resolved"
+          ],
+          "description": "Choose to analyze events with a certain state. If left empty, events of all states will be analyzed",
+          "ecoscope:advanced": false,
+          "items": {
+            "type": "string",
+            "oneOf": [
+              {
+                "const": "new",
+                "title": "New"
+              },
+              {
+                "const": "active",
+                "title": "Active"
+              },
+              {
+                "const": "resolved",
+                "title": "Resolved"
+              },
+              {
+                "const": "review",
+                "title": "Review"
+              }
+            ]
+          },
+          "title": "Event State",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "force_point_geometry": {
+          "default": true,
+          "description": "If True, polygon/multipolygon event geometries are reduced to their centroid. Set False to preserve native geometry types.",
+          "ecoscope:advanced": true,
+          "title": "Force Point Geometry",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "event_types"
+      ],
+      "type": "object",
+      "title": "Get Community Engagement Events"
+    },
+    "event_radius": {
+      "additionalProperties": false,
+      "properties": {
+        "var": {
+          "title": "Radius",
+          "type": "integer",
+          "default": 5,
+          "description": "Size of each event marker, in pixels.",
+          "ecoscope:advanced": true
+        }
+      },
+      "required": [
+        "var"
+      ],
+      "type": "object",
+      "title": "Event Marker Size"
+    },
+    "Choropleth Setting": {
+      "type": "object",
+      "description": "Number of meetings per village polygon.",
+      "ecoscope:task_group": true,
+      "properties": {
+        "choropleth_colormap": {
+          "additionalProperties": false,
+          "properties": {
+            "colormap": {
+              "default": "Blues",
+              "description": "Sequential matplotlib colormap name.",
+              "title": "Colormap",
+              "type": "string",
+              "oneOf": [
+                {
+                  "const": "Blues",
+                  "title": "Blues"
+                },
+                {
+                  "const": "Greens",
+                  "title": "Greens"
+                },
+                {
+                  "const": "Oranges",
+                  "title": "Oranges"
+                },
+                {
+                  "const": "Purples",
+                  "title": "Purples"
+                },
+                {
+                  "const": "Reds",
+                  "title": "Reds"
+                },
+                {
+                  "const": "Greys",
+                  "title": "Greys"
+                },
+                {
+                  "const": "YlOrRd",
+                  "title": "Yellow-Orange-Red"
+                },
+                {
+                  "const": "YlOrBr",
+                  "title": "Yellow-Orange-Brown"
+                },
+                {
+                  "const": "YlGnBu",
+                  "title": "Yellow-Green-Blue"
+                },
+                {
+                  "const": "YlGn",
+                  "title": "Yellow-Green"
+                },
+                {
+                  "const": "BuPu",
+                  "title": "Blue-Purple"
+                },
+                {
+                  "const": "BuGn",
+                  "title": "Blue-Green"
+                },
+                {
+                  "const": "GnBu",
+                  "title": "Green-Blue"
+                },
+                {
+                  "const": "OrRd",
+                  "title": "Orange-Red"
+                },
+                {
+                  "const": "PuRd",
+                  "title": "Purple-Red"
+                },
+                {
+                  "const": "PuBu",
+                  "title": "Purple-Blue"
+                },
+                {
+                  "const": "PuBuGn",
+                  "title": "Purple-Blue-Green"
+                },
+                {
+                  "const": "RdPu",
+                  "title": "Red-Purple"
+                },
+                {
+                  "const": "viridis",
+                  "title": "Viridis"
+                },
+                {
+                  "const": "plasma",
+                  "title": "Plasma"
+                },
+                {
+                  "const": "magma",
+                  "title": "Magma"
+                },
+                {
+                  "const": "cividis",
+                  "title": "Cividis"
+                }
+              ]
+            },
+            "max_classes": {
+              "default": 5,
+              "description": "Maximum number of colour classes for the choropleth (Natural Breaks). Automatically reduced if fewer unique values exist in the data.",
+              "title": "Max Classes",
+              "type": "integer"
+            },
+            "colormap_min": {
+              "default": 0.15,
+              "description": "Start of the colormap range (0\u20131). Increase to skip the lightest shades.",
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "title": "Colormap Min",
+              "type": "number"
+            },
+            "colormap_max": {
+              "default": 0.72,
+              "description": "End of the colormap range (0\u20131). Decrease to avoid the darkest shades.",
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "title": "Colormap Max",
+              "type": "number"
+            }
+          },
+          "required": [],
+          "type": "object",
+          "title": ""
+        }
+      }
+    },
+    "text_layer_size": {
+      "additionalProperties": false,
+      "properties": {
+        "var": {
+          "title": "Text Layer Size",
+          "type": "integer",
+          "default": 12,
+          "description": "Font size of the choropleth text labels (polygon names and meeting counts), in pixels.",
+          "ecoscope:advanced": true
+        }
+      },
+      "required": [
+        "var"
+      ],
+      "type": "object",
+      "title": "Text Layer Size"
+    },
+    "choropleth_view_state": {
+      "additionalProperties": false,
+      "properties": {
+        "padding": {
+          "default": 0.2,
+          "description": "Viewport padding fraction (0\u20131). Fraction of each viewport edge reserved as margin.",
+          "exclusiveMaximum": 1.0,
+          "minimum": 0.0,
+          "title": "Padding",
+          "type": "number",
+          "ecoscope:advanced": true
+        },
+        "viewport_width": {
+          "default": 2560,
+          "description": "Width of the map's viewport, in pixels. Should match Screenshot Setting's Width for the sharpest result.",
+          "title": "Viewport Width",
+          "type": "integer"
+        },
+        "viewport_height": {
+          "default": 1440,
+          "description": "Height of the map's viewport, in pixels. Should match Screenshot Setting's Height for the sharpest result.",
+          "title": "Viewport Height",
+          "type": "integer"
+        }
+      },
+      "required": [],
+      "type": "object",
+      "title": "Choropleth View State"
+    },
+    "choropleth_png": {
+      "additionalProperties": false,
+      "properties": {
+        "config": {
+          "$ref": "#/$defs/ScreenshotConfig",
+          "default": {
+            "width": 1280,
+            "height": 720,
+            "full_page": true,
+            "device_scale_factor": 2.0,
+            "wait_for_timeout": 30000,
+            "timeout": 0,
+            "max_concurrent_pages": 5,
+            "serve_local_files": false
+          },
+          "description": "The screenshot configuration",
+          "properties": {
+            "device_scale_factor": {
+              "type": "number",
+              "title": "Scale Factor",
+              "default": 2.0,
+              "maximum": 2.0,
+              "description": "Rendering scale factor for the screenshot. Capped at 2 - higher values crop the choropleth map due to a deck.gl rendering limitation."
+            },
+            "wait_for_timeout": {
+              "type": "integer",
+              "title": "Wait Time (ms)",
+              "default": 30000,
+              "description": "Forced wait time (ms) after network idle before taking the screenshot."
+            },
+            "width": {
+              "type": "integer",
+              "title": "Width",
+              "default": 2560,
+              "description": "Screenshot width, in pixels."
+            },
+            "height": {
+              "type": "integer",
+              "title": "Height",
+              "default": 1440,
+              "description": "Screenshot height, in pixels."
+            },
+            "full_page": {
+              "type": "boolean",
+              "title": "Full Page",
+              "default": false,
+              "description": "Capture the full scrollable page instead of just the visible viewport."
+            },
+            "timeout": {
+              "type": "integer",
+              "title": "Timeout",
+              "default": 0,
+              "description": "Playwright navigation/screenshot timeout in ms. 0 disables timeouts."
+            },
+            "max_concurrent_pages": {
+              "type": "integer",
+              "title": "Max Concurrent Pages",
+              "default": 5,
+              "description": "Maximum number of pages open at once when batching."
+            },
+            "serve_local_files": {
+              "type": "boolean",
+              "title": "Serve Local Files",
+              "default": false,
+              "description": "Start a local HTTP server serving from the HTML file's directory, to avoid CORS restrictions when deck.gl fetches local files."
+            }
+          },
+          "ecoscope:advanced": true
+        }
+      },
+      "required": [],
+      "type": "object",
+      "title": "Screenshot Setting"
+    }
+  },
+  "$defs": {
+    "EarthRangerConnection": {
+      "properties": {
+        "name": {
+          "title": "Data Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "EarthRangerConnection",
+      "type": "object"
+    },
+    "TimezoneInfo": {
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "tzCode": {
+          "title": "Tzcode",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "utc": {
+          "title": "Utc",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "tzCode",
+        "name",
+        "utc"
+      ],
+      "title": "TimezoneInfo",
+      "type": "object"
+    },
+    "SpatialGrouper": {
+      "properties": {
+        "spatial_index_name": {
+          "title": "Spatial Regions",
+          "type": "string"
+        }
+      },
+      "required": [
+        "spatial_index_name"
+      ],
+      "title": "Spatial",
+      "type": "object"
+    },
+    "TemporalGrouper": {
+      "properties": {
+        "temporal_index": {
+          "oneOf": [
+            {
+              "const": "%Y",
+              "title": "Year (example: 2024)"
+            },
+            {
+              "const": "%B",
+              "title": "Month (example: September)"
+            },
+            {
+              "const": "%Y-%m",
+              "title": "Year and Month (example: 2023-01)"
+            },
+            {
+              "const": "%j",
+              "title": "Day of the year as a number (example: 365)"
+            },
+            {
+              "const": "%d",
+              "title": "Day of the month as a number (example: 31)"
+            },
+            {
+              "const": "%A",
+              "title": "Day of the week (example: Sunday)"
+            },
+            {
+              "const": "%H",
+              "title": "Hour (24-hour clock) as number (example: 22)"
+            },
+            {
+              "const": "%Y-%m-%d",
+              "title": "Date (example: 2025-01-31)"
+            },
+            {
+              "const": "__quarter__",
+              "title": "Quarter (example: 2026 Q3)"
+            },
+            {
+              "const": "__semester__",
+              "title": "Semester (example: 2026 S1)"
+            }
+          ],
+          "title": "Time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "temporal_index"
+      ],
+      "title": "Time",
+      "type": "object"
+    },
+    "ValueGrouper": {
+      "properties": {
+        "index_name": {
+          "title": "Category",
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "meeting_type",
+              "title": "Meeting Type"
+            },
+            {
+              "const": "primary_stakeholder",
+              "title": "Primary Stakeholder"
+            },
+            {
+              "const": "meeting_location_level_one",
+              "title": "Forest Cluster"
+            },
+            {
+              "const": "village",
+              "title": "Village"
+            },
+            {
+              "const": "state",
+              "title": "Event State"
+            }
+          ]
+        }
+      },
+      "required": [
+        "index_name"
+      ],
+      "title": "Category",
+      "type": "object"
+    },
+    "ScreenshotConfig": {
+      "properties": {
+        "width": {
+          "default": 1280,
+          "title": "Width",
+          "type": "integer"
+        },
+        "height": {
+          "default": 720,
+          "title": "Height",
+          "type": "integer"
+        },
+        "full_page": {
+          "default": true,
+          "title": "Full Page",
+          "type": "boolean"
+        },
+        "device_scale_factor": {
+          "default": 2.0,
+          "title": "Device Scale Factor",
+          "type": "number"
+        },
+        "wait_for_timeout": {
+          "default": 30000,
+          "description": "Forced wait time (ms) after network idle before taking the screenshot.",
+          "title": "Wait For Timeout",
+          "type": "integer"
+        },
+        "timeout": {
+          "default": 0,
+          "description": "Playwright navigation/screenshot timeout in ms. 0 disables timeouts.",
+          "title": "Timeout",
+          "type": "integer"
+        },
+        "max_concurrent_pages": {
+          "default": 5,
+          "description": "Maximum number of pages open at once when batching.",
+          "title": "Max Concurrent Pages",
+          "type": "integer"
+        },
+        "serve_local_files": {
+          "default": false,
+          "description": "Start a local HTTP server on port 8099 serving from the HTML file's directory (or their common parent for batches). Use http://127.0.0.1:8099/<relative-path> as data_url in LayerDefinition to avoid CORS restrictions when deck.gl fetches local GeoJSON files. Paths are relative to the HTML file location.",
+          "title": "Serve Local Files",
+          "type": "boolean"
+        }
+      },
+      "title": "ScreenshotConfig",
+      "type": "object"
+    }
+  },
+  "uiSchema": {
+    "workflow_details": {
+      "ui:order": [
+        "name",
+        "description"
+      ]
+    },
+    "time_range": {
+      "ui:order": [
+        "since",
+        "until",
+        "timezone"
+      ]
+    },
+    "events": {
+      "ui:order": [
+        "event_types",
+        "event_states",
+        "force_point_geometry"
+      ]
+    },
+    "Choropleth Setting": {
+      "choropleth_colormap": {
+        "ui:order": [
+          "colormap",
+          "max_classes",
+          "colormap_min",
+          "colormap_max"
+        ]
+      }
+    },
+    "choropleth_view_state": {
+      "ui:order": [
+        "padding",
+        "viewport_width",
+        "viewport_height"
+      ]
+    },
+    "ui:order": [
+      "workflow_details",
+      "er_client",
+      "base_maps",
+      "time_range",
+      "groupers",
+      "events",
+      "Choropleth Setting",
+      "choropleth_view_state",
+      "event_radius",
+      "text_layer_size",
+      "choropleth_png",
+      "Community Report"
+    ],
+    "groupers": {
+      "groupers": {
+        "items": {
+          "anyOf": [
+            {
+              "ui:options": {
+                "label": false
+              }
+            },
+            {
+              "ui:options": {
+                "label": false
+              }
+            }
+          ]
+        }
+      }
+    },
+    "choropleth_png": {
+      "config": {
+        "ui:options": {
+          "label": false
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
