@@ -1,0 +1,36 @@
+workflow_details:
+  name: "Rubeho Community Engagement"
+  description: ""
+
+er_client:
+  data_source:
+    name: "rubeho"  # EarthRanger data source name
+
+time_range:
+  timezone:
+    label: Africa/Dar_es_Salaam
+    tzCode: EAT
+    name: Dar es Salaam
+    utc: +03:00
+  since: "2025-01-01T00:00:00.000Z"
+  until: "2026-12-31T23:59:59.000Z"
+
+groupers:
+  groupers:
+    - temporal_index: "__quarter__"
+#   - index_name: meeting_type
+#   - index_name: primary_stakeholder
+#   - index_name: meeting_location_level_one   # forest cluster
+#   - index_name: village
+
+events:
+  event_types:
+    - "community_meeting"  # "Stakeholder meeting" in EarthRanger
+  event_states:
+    - "resolved"
+
+event_radius:
+  var: 5
+
+text_layer_size:
+  var: 12
