@@ -375,23 +375,32 @@ workflow:
         partial:
           df: ${{ workflow.extract_primary_stakeholder.return }}
           column: meeting_type
+          separator: ", "
+          unspecified_label: Unspecified
 
       - id: stakeholder_labels
         task: label_or_unspecified
         partial:
           df: ${{ workflow.meeting_type_labels.return }}
           column: primary_stakeholder
+          separator: ", "
+          unspecified_label: Unspecified
 
       - id: forest_cluster_labels
         task: label_or_unspecified
         partial:
           df: ${{ workflow.stakeholder_labels.return }}
           column: meeting_location_level_one
+          separator: ", "
+          unspecified_label: Unspecified
 
       - id: topic_labels
         task: prettify_topic_keys
         partial:
           df: ${{ workflow.forest_cluster_labels.return }}
+          event_details_column: event_details
+          topic_key: topics
+          topic_field: topic
 
       - name: Load Village Polygons
         id: village_polygons
@@ -404,6 +413,10 @@ workflow:
           df: ${{ workflow.topic_labels.return }}
           polygons: ${{ workflow.village_polygons.return }}
           polygon_name_column: Name
+          event_details_column: event_details
+          field_pattern: "meeting_location_level_two_[a-z]+"
+          output_column: village
+          unmatched_label: Unmatched
           aliases:
             # keys ignore case/punctuation, so this matches "Mang'aliza" (no apostrophe: it breaks codegen)
             Mangaliza: "Kilambo / Matuli / Mangalisa"
@@ -1139,6 +1152,7 @@ workflow:
           output_dir: ${{ env.ECOSCOPE_WORKFLOWS_RESULTS }}
           config:
             full_page: false
+            wait_for_timeout: 3000  # static plotly charts; the 30s default is for map tiles
         mapvalues:
           argnames: html_path
           argvalues: ${{ workflow.box_plot_html.return }}
@@ -1150,6 +1164,7 @@ workflow:
           output_dir: ${{ env.ECOSCOPE_WORKFLOWS_RESULTS }}
           config:
             full_page: false
+            wait_for_timeout: 3000  # static plotly charts; the 30s default is for map tiles
         mapvalues:
           argnames: html_path
           argvalues: ${{ workflow.gender_split_pie_chart_html.return }}
@@ -1161,6 +1176,7 @@ workflow:
           output_dir: ${{ env.ECOSCOPE_WORKFLOWS_RESULTS }}
           config:
             full_page: false
+            wait_for_timeout: 3000  # static plotly charts; the 30s default is for map tiles
         mapvalues:
           argnames: html_path
           argvalues: ${{ workflow.age_split_pie_chart_html.return }}
